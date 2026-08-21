@@ -409,7 +409,7 @@
             <p class="muted">Tu tapes ton prénom une fois. Il reste sur ce téléphone. Le classement de la classe se met à jour tout seul.</p>
             <form class="gate-form" data-login-form="1">
               <label>Prénom
-                <input id="gate-name" name="name" autocomplete="nickname" maxlength="20" placeholder="ex. Jérôme" />
+                <input id="gate-name" name="name" autocomplete="nickname" maxlength="20" />
               </label>
               <label class="sr-only">Groupe
                 <input id="gate-class" name="className" maxlength="24" value="FIMO" />
