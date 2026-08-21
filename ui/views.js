@@ -385,7 +385,7 @@
   }
 
   function login() {
-    const others = (F.profiles.list() || []).filter(function (u) {
+    const others = ((F.profiles && F.profiles.list && F.profiles.list()) || []).filter(function (u) {
       return !u.imported;
     });
     const chips = others.length
