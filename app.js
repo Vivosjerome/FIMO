@@ -28,7 +28,8 @@
     startedAt: 0,
     ficheId: null,
     errorFilter: "",
-    classNotice: ""
+    classNotice: "",
+    nav: []
   };
 
   function fmtT(n) {
@@ -110,7 +111,57 @@
     return F.views.dashboard(state.classNotice);
   }
 
+  function navSnap() {
+    return {
+      view: state.view,
+      ficheId: state.ficheId,
+      errorFilter: state.errorFilter,
+      classNotice: state.classNotice
+    };
+  }
+
+  function applyNav(s) {
+    state.view = s.view;
+    state.ficheId = s.ficheId;
+    state.errorFilter = s.errorFilter;
+    state.classNotice = s.classNotice || "";
+  }
+
+  function pushNav() {
+    if (state.view === "login" || state.view === "quiz" || state.view === "result") return;
+    const s = navSnap();
+    const last = state.nav[state.nav.length - 1];
+    if (last && last.view === s.view && last.ficheId === s.ficheId && last.errorFilter === s.errorFilter) return;
+    state.nav.push(s);
+    if (state.nav.length > 24) state.nav.shift();
+  }
+
+  function goHome() {
+    state.nav = [];
+    state.view = "home";
+    state.classNotice = "";
+  }
+
+  function goBack() {
+    if (!state.nav.length) {
+      goHome();
+      return;
+    }
+    applyNav(state.nav.pop());
+  }
+
+  function goTo(view) {
+    if (view === "home") {
+      goHome();
+      return;
+    }
+    if (state.view === view) return;
+    pushNav();
+    state.view = view;
+  }
+
   function startQuiz(list, title, mode) {
+    pushNav();
     state.quiz = shuffle(list).map(prepare);
     state.i = 0;
     state.picked = null;
@@ -322,7 +373,7 @@
     else if (state.mode === "exam" && isPma) footerRight = `<button class="btn btn-primary" data-valid-pma="1">Valider</button>`;
     else if (state.mode === "exam") footerRight = `<span class="exam-note">Corrigé à la fin</span>`;
     const footer = `<div class="action-bar"><div class="action-bar-inner">
-      <button class="ghost" data-go="home">Quitter</button>
+      <button class="ghost" data-back="1">Retour</button>
       ${footerRight}
     </div></div>`;
 
@@ -419,6 +470,7 @@
   }
 
   function render() {
+    F.ui.canBack = state.nav.length > 0 && state.view !== "login";
     if (needLogin() && state.view !== "login") state.view = "login";
     if (state.view === "login") app.innerHTML = F.views.login();
     else if (state.view === "classement") app.innerHTML = F.views.classement(state.classNotice);
@@ -537,7 +589,7 @@
         if (wrap) wrap.appendChild(err);
         return;
       }
-      state.view = "home";
+      goHome();
       if (F.sync && F.sync.start) F.sync.start();
       render();
       window.scrollTo(0, 0);
@@ -552,11 +604,17 @@
         if (!open) rank.classList.add("is-open");
         return;
       }
-      const t = e.target.closest("[data-go], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board]");
+      const t = e.target.closest("[data-go], [data-back], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board]");
       if (!t || !app.contains(t)) return;
       if (t.disabled || t.hasAttribute("disabled")) return;
       e.preventDefault();
 
+      if (t.hasAttribute("data-back")) {
+        goBack();
+        render();
+        window.scrollTo(0, 0);
+        return;
+      }
       if (t.hasAttribute("data-go")) {
         const view = t.getAttribute("data-go");
         if (state.classNotice === "reset-ask" || state.classNotice === "wipe-ask") state.classNotice = "";
@@ -564,7 +622,7 @@
           render();
           return;
         }
-        state.view = view;
+        goTo(view);
         render();
         window.scrollTo(0, 0);
         return;
@@ -593,15 +651,15 @@
         const kind = t.getAttribute("data-reset");
         if (kind === "ask") {
           state.classNotice = "reset-ask";
-          if (state.view !== "classement") state.view = "home";
+          if (state.view !== "classement") goHome();
           render();
           window.scrollTo(0, 0);
           return;
         }
         if (kind === "yes") {
           F.profiles.resetProgress();
+          goHome();
           state.classNotice = "Progression effacée. Ton prénom est toujours là.";
-          state.view = "home";
           render();
           window.scrollTo(0, 0);
           return;
@@ -616,7 +674,7 @@
       }
       if (t.hasAttribute("data-switch-user")) {
         F.profiles.switchTo(t.getAttribute("data-switch-user"));
-        state.view = "home";
+        goHome();
         if (F.sync && F.sync.start) F.sync.start();
         render();
         window.scrollTo(0, 0);
@@ -625,6 +683,7 @@
       if (t.hasAttribute("data-go-fiche")) {
         const id = t.getAttribute("data-go-fiche");
         if (!id) return;
+        if (state.view !== "fiche-view" || state.ficheId !== id) pushNav();
         state.ficheId = id;
         state.view = "fiche-view";
         F.progress.openFiche(id);

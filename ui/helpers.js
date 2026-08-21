@@ -27,16 +27,25 @@
   }
 
   function topbar(extra) {
+    const back = F.ui.canBack
+      ? `<button class="back" type="button" data-back="1" aria-label="Retour">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M15.4 4.6 13.8 3 5 12l8.8 9 1.6-1.6L8.2 12z"/></svg>
+        </button>`
+      : "";
+    const right = extra || (F.ui.canBack ? "" : `<button class="ghost" data-go="home">Accueil</button>`);
     return `
       <div class="topbar">
-        <button class="brand" data-go="home">
-          <div class="logo">PL</div>
-          <div>
-            <h1>FIMO PL</h1>
-            <p>Préparation</p>
-          </div>
-        </button>
-        ${extra || `<button class="ghost" data-go="home">Accueil</button>`}
+        <div class="topbar-left">
+          ${back}
+          <button class="brand" data-go="home">
+            <div class="logo">PL</div>
+            <div>
+              <h1>FIMO PL</h1>
+              <p>Préparation</p>
+            </div>
+          </button>
+        </div>
+        ${right}
       </div>`;
   }
 
@@ -50,6 +59,7 @@
     markText: markText,
     catLine: catLine,
     topbar: topbar,
-    bar: bar
+    bar: bar,
+    canBack: false
   };
 })();
