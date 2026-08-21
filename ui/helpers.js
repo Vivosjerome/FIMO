@@ -27,17 +27,11 @@
   }
 
   function topbar(extra) {
-    const back = F.ui.canBack
-      ? `<button class="back" type="button" data-back="1" aria-label="Retour">
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M15.4 4.6 13.8 3 5 12l8.8 9 1.6-1.6L8.2 12z"/></svg>
-        </button>`
-      : "";
     const right = extra || (F.ui.canBack ? "" : `<button class="ghost" data-go="home">Accueil</button>`);
     return `
-      <div class="topbar">
+      <div class="topbar${F.ui.canBack ? " has-back" : ""}">
         <div class="topbar-left">
-          ${back}
-          <button class="brand" data-go="home">
+          <button class="brand" type="button" data-go="home">
             <div class="logo">PL</div>
             <div>
               <h1>FIMO PL</h1>
@@ -47,6 +41,12 @@
         </div>
         ${right}
       </div>`;
+  }
+
+  function backBtn() {
+    return `<button class="back" type="button" data-back="1" aria-label="Retour">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M15.4 4.6 13.8 3 5 12l8.8 9 1.6-1.6L8.2 12z"/></svg>
+    </button>`;
   }
 
   function bar(pct) {
@@ -59,6 +59,7 @@
     markText: markText,
     catLine: catLine,
     topbar: topbar,
+    backBtn: backBtn,
     bar: bar,
     canBack: false
   };

@@ -495,6 +495,22 @@
       const el = document.getElementById("gate-name");
       if (el) el.focus();
     }
+    paintBack();
+  }
+
+  function paintBack() {
+    let el = document.getElementById("fimo-back");
+    if (!F.ui.canBack) {
+      if (el) el.remove();
+      return;
+    }
+    if (el) return;
+    const wrap = document.createElement("div");
+    wrap.innerHTML = (F.ui.backBtn && F.ui.backBtn()) || "";
+    el = wrap.firstElementChild;
+    if (!el) return;
+    el.id = "fimo-back";
+    document.body.appendChild(el);
   }
 
   function answer(idx) {
@@ -572,6 +588,14 @@
   }
 
   function bind() {
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-back]");
+      if (!t) return;
+      e.preventDefault();
+      goBack();
+      render();
+      window.scrollTo(0, 0);
+    });
     app.addEventListener("submit", (e) => {
       const form = e.target.closest("[data-login-form]");
       if (!form || !app.contains(form)) return;
@@ -604,17 +628,11 @@
         if (!open) rank.classList.add("is-open");
         return;
       }
-      const t = e.target.closest("[data-go], [data-back], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board]");
+      const t = e.target.closest("[data-go], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board]");
       if (!t || !app.contains(t)) return;
       if (t.disabled || t.hasAttribute("disabled")) return;
       e.preventDefault();
 
-      if (t.hasAttribute("data-back")) {
-        goBack();
-        render();
-        window.scrollTo(0, 0);
-        return;
-      }
       if (t.hasAttribute("data-go")) {
         const view = t.getAttribute("data-go");
         if (state.classNotice === "reset-ask" || state.classNotice === "wipe-ask") state.classNotice = "";

@@ -127,18 +127,18 @@ button.brand {
   min-width: 0;
 }
 
-.topbar-left:has(.back) {
+.topbar.has-back .topbar-left {
   padding-left: 54px;
 }
 
 .back {
   position: fixed;
   top: max(10px, var(--safe-t));
-  left: 12px;
-  z-index: 60;
+  left: max(12px, env(safe-area-inset-left, 0px));
+  z-index: 200;
   width: 48px;
   height: 48px;
-  flex: 0 0 48px;
+  margin: 0;
   border-radius: 10px;
   background: var(--surface);
   color: var(--ink);
