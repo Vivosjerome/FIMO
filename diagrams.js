@@ -19,7 +19,7 @@
     const body = rows
       .map(([k, v]) => `<div class="plaque-row"><span>${k}</span><strong>${v}</strong></div>`)
       .join("");
-    const extra = opts.pneu == null ? "" : `<p class="plaque-tag">${opts.pneu ? "Pneumatiques" : "Non pneum."}</p>`;
+    const extra = "";
     return `<article class="plaque">
       <h3>${opts.title} <small>${opts.essieux} ess.</small></h3>
       ${body}${extra}

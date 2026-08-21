@@ -199,7 +199,6 @@
           <article>
             <h3>44 t</h3>
             <p class="line">Essieux = <strong>≥ 5</strong></p>
-            <p class="line">Suspensions = <strong>pneumatiques</strong></p>
             <p class="line"><span class="sigle">PTRA</span> moteur = <strong>44 t</strong></p>
             <p class="line">Semi 2 essieux = <strong><span class="sigle">PTAC</span> ≥ 37 t</strong></p>
             <p class="line">Semi 3 essieux = <strong><span class="sigle">PTAC</span> ≥ 38 t</strong></p>
@@ -553,14 +552,14 @@
         if (!open) rank.classList.add("is-open");
         return;
       }
-      const t = e.target.closest("[data-go], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user]");
+      const t = e.target.closest("[data-go], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board]");
       if (!t || !app.contains(t)) return;
       if (t.disabled || t.hasAttribute("disabled")) return;
       e.preventDefault();
 
       if (t.hasAttribute("data-go")) {
         const view = t.getAttribute("data-go");
-        if (state.classNotice === "reset-ask") state.classNotice = "";
+        if (state.classNotice === "reset-ask" || state.classNotice === "wipe-ask") state.classNotice = "";
         if (state.view === view) {
           render();
           return;
@@ -569,6 +568,26 @@
         render();
         window.scrollTo(0, 0);
         return;
+      }
+      if (t.hasAttribute("data-wipe-board")) {
+        const kind = t.getAttribute("data-wipe-board");
+        if (kind === "ask") {
+          state.classNotice = "wipe-ask";
+          state.view = "classement";
+          render();
+          window.scrollTo(0, 0);
+          return;
+        }
+        if (kind === "yes") {
+          if (F.sync && F.sync.clearAll) {
+            F.sync.clearAll().then(function () {
+              state.classNotice = "Classement vidé. Tu es tout seul dessus.";
+              state.view = "classement";
+              render();
+            });
+          }
+          return;
+        }
       }
       if (t.hasAttribute("data-reset")) {
         const kind = t.getAttribute("data-reset");

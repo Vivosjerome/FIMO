@@ -106,20 +106,61 @@
     return rows;
   }
 
+  function sameName(a, b) {
+    return (
+      String((a && a.name) || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim() ===
+      String((b && b.name) || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim()
+    );
+  }
+
+  function foldNames(rows) {
+    const meId = deviceId();
+    const byName = {};
+    rows.forEach(function (r) {
+      const k = String(r.name || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+      if (!k) return;
+      const prev = byName[k];
+      if (!prev) {
+        byName[k] = r;
+        return;
+      }
+      if (r.id === meId) byName[k] = r;
+      else if (prev.id !== meId && (r.t || 0) >= (prev.t || 0)) byName[k] = r;
+    });
+    return Object.keys(byName).map(function (k) {
+      return byName[k];
+    });
+  }
+
   function mergeMe(rows) {
     const me = localRow();
-    if (!me) return rows.slice();
-    let found = false;
-    const out = rows.map(function (r) {
-      if (r.id !== me.id) return r;
-      found = true;
-      return me;
-    });
-    if (!found) out.push(me);
-    out.sort(function (a, b) {
+    let list = (rows || []).slice();
+    if (me) {
+      list = list.filter(function (r) {
+        return r.id === me.id || !sameName(r, me);
+      });
+      let found = false;
+      list = list.map(function (r) {
+        if (r.id !== me.id) return r;
+        found = true;
+        return me;
+      });
+      if (!found) list.push(me);
+    }
+    list = foldNames(list);
+    list.sort(function (a, b) {
       return rankScore(b) - rankScore(a);
     });
-    return out;
+    return list;
   }
 
   function emit() {
@@ -168,6 +209,9 @@
     if (!url || !row || !key) return Promise.resolve();
     const body = { users: {} };
     body.users[row.id] = payloadOf(row);
+    cache.forEach(function (r) {
+      if (r.id !== row.id && sameName(r, row)) body.users[r.id] = null;
+    });
     return fetch(url, {
       method: "PATCH",
       headers: headers(true),
@@ -193,6 +237,29 @@
       headers: headers(true),
       body: JSON.stringify(body)
     }).catch(function () {});
+  }
+
+  function clearAll() {
+    if (!url || !key) return Promise.resolve();
+    const vis = host + "/visibility/" + ns + "/" + path;
+    return fetch(url, {
+      method: "POST",
+      headers: headers(true),
+      body: JSON.stringify({ users: {} })
+    })
+      .then(function () {
+        return fetch(vis, {
+          method: "PUT",
+          headers: headers(true),
+          body: JSON.stringify({ public_read: true })
+        });
+      })
+      .then(function () {
+        cache = [];
+        emit();
+        return publish();
+      })
+      .catch(function () {});
   }
 
   function tick() {
@@ -228,6 +295,7 @@
     pull: pull,
     publish: publish,
     publishSoon: publishSoon,
-    drop: drop
+    drop: drop,
+    clearAll: clearAll
   };
 })();

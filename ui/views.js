@@ -80,7 +80,7 @@
         <span class="board-live">en direct</span>
       </div>
       ${rankItems(rows)}
-      <p class="muted board-hint">% global. Survole un nom (ou tape dessus) pour voir par matière.</p>
+      <p class="muted board-hint">% global. Survole un nom pour le détail à côté.</p>
     </aside>`;
   }
 
@@ -405,8 +405,9 @@
         <header class="chrome">${u().topbar('<span class="stat">Profil</span>')}</header>
         <main class="wrap">
           <section class="hero">
-            <h2>Bienvuenue</h2>
-            <p class="muted">Entre ton prénom c'est pour le classement !</p>
+            <h2>Bienvenue</h2>
+            <p class="muted">Entre ton prénom, c'est pour le classement.</p>
+            <p class="note warn">Attention : la navigation privée ne sauvegarde pas tes données.</p>
             <form class="gate-form" data-login-form="1">
               <label>Prénom
                 <input id="gate-name" name="name" autocomplete="nickname" maxlength="20" />
@@ -428,7 +429,7 @@
     return wrap(
       "",
       `
-      ${notice && notice !== "reset-ask" ? `<p class="note">${u().escapeHtml(notice)}</p>` : ""}
+      ${notice && notice !== "reset-ask" && notice !== "wipe-ask" ? `<p class="note">${u().escapeHtml(notice)}</p>` : ""}
       ${boardPanel()}
       <div class="section-title">Comptes sur ce téléphone</div>
       <div class="modes">
@@ -439,13 +440,20 @@
         </button>
       </div>
       ${
-        resetAsk
+        notice === "wipe-ask"
+          ? `<div class="reset-banner">
+              <p><strong>Vider tout le classement ?</strong> Jérôme, Hugo, tout le monde disparaît. Toi tu reviens tout seul.</p>
+              <button class="btn btn-primary" data-wipe-board="yes">Oui, tout effacer</button>
+              <button class="btn btn-dark" data-go="classement">Annuler</button>
+            </div>`
+          : resetAsk
           ? `<div class="reset-banner">
               <p><strong>Tout recommencer ?</strong> Tes QCM, erreurs et blancs partent. Ton prénom reste.</p>
               <button class="btn btn-primary" data-reset="yes">Oui, effacer ma progression</button>
               <button class="btn btn-dark" data-go="classement">Annuler</button>
             </div>`
           : `<p class="foot-link">
+              <button class="ghost danger-ghost" data-wipe-board="ask">Vider le classement</button>
               <button class="ghost danger-ghost" data-reset="ask">Tout recommencer</button>
               <button class="ghost danger-ghost" data-reset="forget">Oublier ${u().escapeHtml((me && me.name) || "ce profil")}</button>
             </p>`

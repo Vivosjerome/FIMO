@@ -30,7 +30,6 @@
   function eligible44(exo) {
     const total = totalAxles(exo);
     if (total < 5) return false;
-    if (!exo.pneu) return false;
     const moteur = exo.kind === "porteur-remorque" ? exo.porteur : exo.tracteur;
     if (!moteur || moteur.ptra < 44) return false;
     if (exo.kind === "tracteur-semi") {
@@ -57,7 +56,6 @@
     const total = totalAxles(exo);
     const bits = [];
     if (total < 5) bits.push("moins de 5 essieux");
-    if (!exo.pneu) bits.push("suspensions non pneumatiques");
     const moteur = exo.kind === "porteur-remorque" ? exo.porteur : exo.tracteur;
     if (moteur.ptra < 44) bits.push("PTRA du moteur < 44 t");
     if (exo.kind === "tracteur-semi") {
@@ -219,7 +217,7 @@
     {
       id: "h13",
       kind: "tracteur-semi",
-      pneu: false,
+      pneu: true,
       tracteur: { axles: 2, ptac: 19, pv: 8, ptra: 44 },
       semi: { axles: 3, ptac: 38, pv: 7 }
     },
@@ -267,7 +265,7 @@
     {
       id: "h20",
       kind: "porteur-remorque",
-      pneu: false,
+      pneu: true,
       porteur: { axles: 3, ptac: 26, pv: 12, ptra: 44 },
       remorque: { axles: 3, ptac: 26, pv: 7 }
     },
@@ -297,7 +295,7 @@
 
   function generateOne(i) {
     const kind = pick(["porteur", "porteur-remorque", "porteur-remorque", "tracteur-semi", "tracteur-semi"]);
-    const pneu = Math.random() > 0.25;
+    const pneu = true;
     if (kind === "porteur") {
       const axles = pick([2, 3, 4]);
       const ptac = maxPtacMoteur(axles) - pick([0, 0, 0, 1]);
