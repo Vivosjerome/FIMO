@@ -405,8 +405,8 @@
         <header class="chrome">${u().topbar('<span class="stat">Profil</span>')}</header>
         <main class="wrap">
           <section class="hero">
-            <h2>C'est qui ?</h2>
-            <p class="muted">Tu tapes ton prénom une fois. Il reste sur ce téléphone. Le classement de la classe se met à jour tout seul.</p>
+            <h2>Bienvuenue</h2>
+            <p class="muted">Entre ton prénom c'est pour le classement !</p>
             <form class="gate-form" data-login-form="1">
               <label>Prénom
                 <input id="gate-name" name="name" autocomplete="nickname" maxlength="20" />
