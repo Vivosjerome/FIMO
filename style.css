@@ -313,6 +313,22 @@ button.brand {
 
 .mode-main .sigle { color: var(--red); }
 
+.mode-rev {
+  background: var(--green-soft);
+  border-color: var(--green);
+  box-shadow: inset 3px 0 0 var(--green);
+}
+
+.mode-rev strong { color: #b7d4c4; }
+
+.mode-fiche {
+  background: #2a2418;
+  border-color: #c4a15a;
+  box-shadow: inset 3px 0 0 #c4a15a;
+}
+
+.mode-fiche strong { color: #e8c97a; }
+
 .section-title {
   margin: 4px 0 10px;
   font-size: 0.7rem;

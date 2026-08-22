@@ -184,6 +184,9 @@
             Que du calcul : le dessin, les plaques de tare, et tu tapes le PMA et la CU.
             Pas de QCM. Les chiffres changent à chaque série.
           </p>
+          <p class="foot-link">
+            <button class="ghost" data-go="fiche">Fiche formules</button>
+          </p>
           <div class="modes modes-3">
             <button class="mode mode-main" data-start-pma="8">
               <span class="mode-kicker">Série</span>

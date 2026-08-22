@@ -152,10 +152,15 @@
         ${boardPanel()}
         <div class="dash-rest">
           <div class="modes">
-            <button class="mode mode-main" data-go="revisions">
+            <button class="mode mode-rev" data-go="revisions">
               <span class="mode-kicker">Apprendre</span>
               <strong>Révisions</strong>
               <span>Fiches par thème</span>
+            </button>
+            <button class="mode mode-fiche" data-go="fiche">
+              <span class="mode-kicker">À retenir</span>
+              <strong>Fiche formules</strong>
+              <span>PMA · essieux · 44 t</span>
             </button>
             <button class="mode" data-go="themes">
               <span class="mode-kicker">S'entraîner</span>
@@ -188,7 +193,6 @@
           <div class="section-title">Points faibles</div>
           ${weakHtml}
           <p class="foot-link">
-            <button class="ghost" data-go="fiche">Fiche formules (masses)</button>
             <button class="ghost danger-ghost" data-reset="ask">Tout recommencer</button>
           </p>
         </div>
