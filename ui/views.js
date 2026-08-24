@@ -428,13 +428,12 @@
   }
 
   function classement(notice) {
-    const me = F.profiles.current();
-    const resetAsk = notice === "reset-ask";
-    return wrap(
-      "",
-      `
-      ${notice && notice !== "reset-ask" && notice !== "wipe-ask" ? `<p class="note">${u().escapeHtml(notice)}</p>` : ""}
+  return wrap(
+    "",
+    `
+      ${notice ? `<p class="note">${u().escapeHtml(notice)}</p>` : ""}
       ${boardPanel()}
+
       <div class="section-title">Comptes sur ce téléphone</div>
       <div class="modes">
         <button class="mode" data-go="login">
@@ -443,29 +442,10 @@
           <span>Changer de compte</span>
         </button>
       </div>
-      ${
-        notice === "wipe-ask"
-          ? `<div class="reset-banner">
-              <p><strong>Vider tout le classement ?</strong> Jérôme, Hugo, tout le monde disparaît. Toi tu reviens tout seul.</p>
-              <button class="btn btn-primary" data-wipe-board="yes">Oui, tout effacer</button>
-              <button class="btn btn-dark" data-go="classement">Annuler</button>
-            </div>`
-          : resetAsk
-          ? `<div class="reset-banner">
-              <p><strong>Tout recommencer ?</strong> Tes QCM, erreurs et blancs partent. Ton prénom reste.</p>
-              <button class="btn btn-primary" data-reset="yes">Oui, effacer ma progression</button>
-              <button class="btn btn-dark" data-go="classement">Annuler</button>
-            </div>`
-          : `<p class="foot-link">
-              <button class="ghost danger-ghost" data-wipe-board="ask">Vider le classement</button>
-              <button class="ghost danger-ghost" data-reset="ask">Tout recommencer</button>
-              <button class="ghost danger-ghost" data-reset="forget">Oublier ${u().escapeHtml((me && me.name) || "ce profil")}</button>
-            </p>`
-      }
     `
-    );
-  }
-
+  );
+}
+  
   F.views = {
     dashboard: dashboard,
     themes: themes,
