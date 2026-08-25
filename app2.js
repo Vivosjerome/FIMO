@@ -235,7 +235,7 @@
           </article>
 
           <article>
-            <h3>Ensemble - le plus petit des 3</h3>
+            <h3>Ensemble : le plus petit des 3</h3>
             <p class="line">1. <span class="sigle">PTRA</span> moteur = <strong>plaque de tare</strong></p>
             <p class="line">2. Loi des essieux = <strong>38 t / 40 t / 44 t</strong></p>
             <p class="line">3. Porteur + remorque = <strong><span class="sigle">PTAC</span> + <span class="sigle">PTAC</span></strong></p>
@@ -244,7 +244,7 @@
           </article>
 
           <article>
-            <h3>Essieux - isol&eacute;</h3>
+            <h3>Essieux : isol&eacute;</h3>
             <p class="kv-label">Moteur</p>
             <p class="line">2 essieux = <strong>19 t</strong></p>
             <p class="line">3 essieux = <strong>26 t</strong></p>
@@ -255,7 +255,7 @@
           </article>
 
           <article>
-            <h3>Essieux - ensemble</h3>
+            <h3>Essieux : ensemble</h3>
             <p class="line">4 essieux = <strong>38 t</strong></p>
             <p class="line">5 essieux et + = <strong>40 t</strong></p>
             <p class="line">5 essieux et + avec conditions = <strong>44 t</strong></p>
