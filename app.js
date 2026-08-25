@@ -666,7 +666,8 @@
         if (kind === "yes") {
           if (F.sync && F.sync.clearAll) {
             F.sync.clearAll().then(function () {
-  app.addEventListener("click", (e) => {
+    app.addEventListener("click", (e) => {
+    // 1. Accordéons / toggles de rang
     const rank = e.target.closest("[data-rank-toggle]");
     if (rank && app.contains(rank) && !e.target.closest("[data-go], [data-reset]")) {
       const open = rank.classList.contains("is-open");
@@ -677,12 +678,13 @@
       return;
     }
 
+    // 2. Détection de tous les boutons cliquables
     const t = e.target.closest("[data-go], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board], [data-admin-wipe]");
     if (!t || !app.contains(t)) return;
     if (t.disabled || t.hasAttribute("disabled")) return;
     e.preventDefault();
 
-    // 1. Bouton Admin : Demande du mot de passe
+    // 3. Bouton Admin : Demande du mot de passe
     if (t.hasAttribute("data-admin-wipe")) {
       const code = prompt("Code administrateur requis :");
       if (code === "1234") { // Mot de passe
@@ -696,26 +698,7 @@
       return;
     }
 
-    // 2. Action de vidage après confirmation ("Oui, tout effacer")
-    if (t.hasAttribute("data-wipe-board")) {
-      const kind = t.getAttribute("data-wipe-board");
-      if (kind === "yes") {
-        if (F.sync && F.sync.clearAll) {
-          F.sync.clearAll().then(function () {
-            state.classNotice = "Classement vidé. Tu es tout seul dessus.";
-            state.view = "classement";
-            render();
-          });
-        } else if (F.sync && F.sync.wipe) {
-          F.sync.wipe();
-          state.classNotice = "Classement vidé.";
-          state.view = "classement";
-          render();
-        }
-        return;
-      }
-    }
-
+    // 4. Action de navigation globale
     if (t.hasAttribute("data-go")) {
       const view = t.getAttribute("data-go");
       if (state.classNotice === "reset-ask" || state.classNotice === "wipe-ask") state.classNotice = "";
