@@ -269,14 +269,30 @@
     const f = F.getFiche(ficheId);
     if (!f) return wrap("", "<p>Fiche introuvable.</p>");
     const qs = F.bank.byFiche(f.id);
-    const order = { objectif: 0, cours: 1, connaitre: 2, pieges: 3, exemple: 4, resume: 5 };
-    const sections = (f.sections || [])
-      .slice()
-      .sort(function (a, b) {
-        const ia = order[a.type] != null ? order[a.type] : 8;
-        const ib = order[b.type] != null ? order[b.type] : 8;
-        return ia - ib;
-      })
+    const raw = (f.sections || []).slice();
+    const know = [];
+    const rest = [];
+    raw.forEach(function (s) {
+      if (s.type === "connaitre") know.push(s);
+      else rest.push(s);
+    });
+    const ordered = [];
+    let placed = false;
+    rest.forEach(function (s) {
+      if (s.type === "pieges" && !placed) {
+        know.forEach(function (k) {
+          ordered.push(k);
+        });
+        placed = true;
+      }
+      ordered.push(s);
+    });
+    if (!placed) {
+      know.forEach(function (k) {
+        ordered.push(k);
+      });
+    }
+    const sections = ordered
       .map(function (s) {
         const title = s.type === "connaitre" ? "À connaître parfaitement" : s.title || "";
         const extra = s.body ? `<p>${u().markText(s.body)}</p>` : "";
