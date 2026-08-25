@@ -885,12 +885,204 @@
         return;
       }
       if (t.hasAttribute("data-start-errors")) {
+  function bind() {
+    // Gestion du bouton Retour
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-back]");
+      if (!t) return;
+      e.preventDefault();
+      goBack();
+      render();
+      window.scrollTo(0, 0);
+    });
+
+    // Gestion du formulaire de connexion
+    app.addEventListener("submit", (e) => {
+      const form = e.target.closest("[data-login-form]");
+      if (!form || !app.contains(form)) return;
+      e.preventDefault();
+      const nameEl = document.getElementById("gate-name");
+      const classEl = document.getElementById("gate-class");
+      const res = F.profiles.create(nameEl ? nameEl.value : "", classEl ? classEl.value : "");
+      if (!res.ok) {
+        state.view = "login";
+        render();
+        const err = document.createElement("p");
+        err.className = "note warn";
+        err.textContent = res.err || "Prénom obligatoire.";
+        const wrap = app.querySelector(".gate-form");
+        if (wrap) wrap.appendChild(err);
+        return;
+      }
+      goHome();
+      if (F.sync && F.sync.start) F.sync.start();
+      render();
+      window.scrollTo(0, 0);
+    });
+
+    // Écouteur unique pour tous les clics dans l'application
+    app.addEventListener("click", (e) => {
+      // 1. Détection directe du bouton Admin
+      const adminBtn = e.target.closest("[data-admin-wipe]");
+      if (adminBtn && app.contains(adminBtn)) {
+        e.preventDefault();
+        const code = prompt("Code administrateur requis :");
+        if (code === "1234") { // Ton mot de passe
+          state.classNotice = "wipe-ask";
+          state.view = "classement";
+          render();
+          window.scrollTo(0, 0);
+        } else if (code !== null) {
+          alert("Code incorrect.");
+        }
+        return;
+      }
+
+      // 2. Accordéons / toggles de rang
+      const rank = e.target.closest("[data-rank-toggle]");
+      if (rank && app.contains(rank) && !e.target.closest("[data-go], [data-reset]")) {
+        const open = rank.classList.contains("is-open");
+        app.querySelectorAll("[data-rank-toggle].is-open").forEach(function (node) {
+          node.classList.remove("is-open");
+        });
+        if (!open) rank.classList.add("is-open");
+        return;
+      }
+
+      // 3. Interception des autres boutons interactifs
+      const t = e.target.closest("[data-go], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board]");
+      if (!t || !app.contains(t)) return;
+      if (t.disabled || t.hasAttribute("disabled")) return;
+      e.preventDefault();
+
+      if (t.hasAttribute("data-go")) {
+        const view = t.getAttribute("data-go");
+        if (state.classNotice === "reset-ask" || state.classNotice === "wipe-ask") state.classNotice = "";
+        if (state.view === view) {
+          render();
+          return;
+        }
+        goTo(view);
+        render();
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      if (t.hasAttribute("data-wipe-board")) {
+        const kind = t.getAttribute("data-wipe-board");
+        if (kind === "ask") {
+          state.classNotice = "wipe-ask";
+          state.view = "classement";
+          render();
+          window.scrollTo(0, 0);
+          return;
+        }
+        if (kind === "yes") {
+          if (F.sync && F.sync.clearAll) {
+            F.sync.clearAll().then(function () {
+              state.classNotice = "Classement vidé. Tu es tout seul dessus.";
+              state.view = "classement";
+              render();
+            });
+          } else if (F.sync && F.sync.wipe) {
+            F.sync.wipe();
+            state.classNotice = "Classement vidé.";
+            state.view = "classement";
+            render();
+          }
+          return;
+        }
+      }
+
+      if (t.hasAttribute("data-reset")) {
+        const kind = t.getAttribute("data-reset");
+        if (kind === "ask") {
+          state.classNotice = "reset-ask";
+          if (state.view !== "classement") goHome();
+          render();
+          window.scrollTo(0, 0);
+          return;
+        }
+        if (kind === "yes") {
+          F.profiles.resetProgress();
+          goHome();
+          state.classNotice = "Progression effacée. Ton prénom est toujours là.";
+          render();
+          window.scrollTo(0, 0);
+          return;
+        }
+        if (kind === "forget") {
+          F.profiles.removeCurrent();
+          state.view = "login";
+          render();
+          window.scrollTo(0, 0);
+          return;
+        }
+      }
+
+      if (t.hasAttribute("data-switch-user")) {
+        F.profiles.switchTo(t.getAttribute("data-switch-user"));
+        goHome();
+        if (F.sync && F.sync.start) F.sync.start();
+        render();
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      if (t.hasAttribute("data-go-fiche")) {
+        const id = t.getAttribute("data-go-fiche");
+        if (!id) return;
+        if (state.view !== "fiche-view" || state.ficheId !== id) pushNav();
+        state.ficheId = id;
+        state.view = "fiche-view";
+        F.progress.openFiche(id);
+        render();
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      if (t.hasAttribute("data-error-filter")) {
+        state.errorFilter = t.getAttribute("data-error-filter") || "";
+        state.view = "errors";
+        render();
+        return;
+      }
+
+      if (t.hasAttribute("data-start-mix")) {
+        const n = Number(t.getAttribute("data-start-mix"));
+        startQuiz(mixed(n, true), "Test aléatoire " + n + " questions", "learn");
+        return;
+      }
+
+      if (t.hasAttribute("data-start-exam")) {
+        const n = Number(t.getAttribute("data-start-exam"));
+        startQuiz(mixed(n, false), "Blanc " + n + " questions", "exam");
+        return;
+      }
+
+      if (t.hasAttribute("data-start-pma")) {
+        const n = Number(t.getAttribute("data-start-pma"));
+        startQuiz(F.generate.fromTemplate("pma", n), "Exos PMA / CU", "learn");
+        return;
+      }
+
+      if (t.hasAttribute("data-start-fiche")) {
+        const id = t.getAttribute("data-start-fiche");
+        const list = F.select.byFiche(id);
+        const fiche = F.getFiche(id);
+        if (!list.length) return;
+        startQuiz(list, (fiche && fiche.title) || id, "learn");
+        return;
+      }
+
+      if (t.hasAttribute("data-start-errors")) {
         const id = t.getAttribute("data-start-errors") || "";
         const list = F.select.errors(id);
         if (!list.length) return;
         startQuiz(list, id ? "Erreurs — " + ((F.getFiche(id) || {}).title || id) : "Mes erreurs", "learn");
         return;
       }
+
       if (t.hasAttribute("data-start-quick")) {
         const n = Number(t.getAttribute("data-start-quick"));
         const pool = t.getAttribute("data-pool") || "random";
@@ -898,23 +1090,28 @@
         startQuiz(F.select.mixed(n, { pool: pool }), (labels[pool] || "Révision") + " · " + n, "learn");
         return;
       }
+
       if (t.hasAttribute("data-theme")) {
         const id = t.getAttribute("data-theme");
         startQuiz(F.select.byCategory(id), CAT_MAP[id].name, "learn");
         return;
       }
+
       if (t.hasAttribute("data-pick")) {
         answer(Number(t.getAttribute("data-pick")));
         return;
       }
+
       if (t.hasAttribute("data-valid-pma")) {
         answerPma();
         return;
       }
+
       if (t.hasAttribute("data-next")) {
         next();
         return;
       }
+
       if (t.hasAttribute("data-retry")) {
         if (state.title.indexOf("PMA") !== -1) startQuiz(F.generate.fromTemplate("pma", 12), "Exos PMA / CU", "learn");
         else if (state.title.indexOf("Blanc") !== -1) startQuiz(mixed(60, false), "Blanc 60 questions", "exam");
@@ -925,7 +1122,7 @@
           startQuiz(mixed(count, true), "Test aléatoire " + count + " questions", "learn");
         }
       }
-    });
+    }); 
   }
 
   window.addEventListener("keydown", (e) => {
