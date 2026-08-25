@@ -756,6 +756,101 @@
     }
 
     if (t.hasAttribute("data-switch-user")) {
+  app.addEventListener("click", (e) => {
+    // 1. Détection directe du bouton Admin (traité en priorité)
+    const adminBtn = e.target.closest("[data-admin-wipe]");
+    if (adminBtn && app.contains(adminBtn)) {
+      e.preventDefault();
+      const code = prompt("Code administrateur requis :");
+      if (code === "1234") { // <-- Ton mot de passe
+        state.classNotice = "wipe-ask";
+        state.view = "classement";
+        render();
+        window.scrollTo(0, 0);
+      } else if (code !== null) {
+        alert("Code incorrect.");
+      }
+      return;
+    }
+
+    // 2. Gestion des accordéons/toggles de rang
+    const rank = e.target.closest("[data-rank-toggle]");
+    if (rank && app.contains(rank) && !e.target.closest("[data-go], [data-reset]")) {
+      const open = rank.classList.contains("is-open");
+      app.querySelectorAll("[data-rank-toggle].is-open").forEach(function (node) {
+        node.classList.remove("is-open");
+      });
+      if (!open) rank.classList.add("is-open");
+      return;
+    }
+
+    // 3. Capture des autres boutons de l'application
+    const t = e.target.closest("[data-go], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board]");
+    if (!t || !app.contains(t)) return;
+    if (t.disabled || t.hasAttribute("disabled")) return;
+    e.preventDefault();
+
+    if (t.hasAttribute("data-go")) {
+      const view = t.getAttribute("data-go");
+      if (state.classNotice === "reset-ask" || state.classNotice === "wipe-ask") state.classNotice = "";
+      if (state.view === view) {
+        render();
+        return;
+      }
+      goTo(view);
+      render();
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (t.hasAttribute("data-wipe-board")) {
+      const kind = t.getAttribute("data-wipe-board");
+      if (kind === "ask") {
+        state.classNotice = "wipe-ask";
+        state.view = "classement";
+        render();
+        window.scrollTo(0, 0);
+        return;
+      }
+      if (kind === "yes") {
+        if (F.sync && F.sync.clearAll) {
+          F.sync.clearAll().then(function () {
+            state.classNotice = "Classement vidé. Tu es tout seul dessus.";
+            state.view = "classement";
+            render();
+          });
+        }
+        return;
+      }
+    }
+
+    if (t.hasAttribute("data-reset")) {
+      const kind = t.getAttribute("data-reset");
+      if (kind === "ask") {
+        state.classNotice = "reset-ask";
+        if (state.view !== "classement") goHome();
+        render();
+        window.scrollTo(0, 0);
+        return;
+      }
+      if (kind === "yes") {
+        F.profiles.resetProgress();
+        goHome();
+        state.classNotice = "Progression effacée. Ton prénom est toujours là.";
+        render();
+        window.scrollTo(0, 0);
+        return;
+      }
+      if (kind === "forget") {
+        F.profiles.removeCurrent();
+        state.view = "login";
+        render();
+        window.scrollTo(0, 0);
+        return;
+      }
+    }
+
+    if (t.hasAttribute("data-switch-user")) {
       F.profiles.switchTo(t.getAttribute("data-switch-user"));
       goHome();
       if (F.sync && F.sync.start) F.sync.start();
