@@ -196,7 +196,7 @@
             Pas de QCM. Les chiffres changent à chaque série.
           </p>
           <p class="foot-link">
-            <button class="ghost" data-go="fiche">Fiche formules</button>
+            <a class="ghost" href="formules.html">Fiche formules</a>
           </p>
           <div class="modes modes-3">
             <button class="mode mode-main" data-start-pma="8">
@@ -221,13 +221,8 @@
   }
 
   function fiche() {
-    const tpl = document.getElementById("tpl-fiche");
-    const inner = tpl ? tpl.innerHTML : "";
-    return `
-      <div class="page">
-        <header class="chrome">${topbar()}</header>
-        <main class="wrap">${inner}</main>
-      </div>`;
+    location.replace("formules.html");
+    return "";
   }
 
   function quizView() {
@@ -619,6 +614,10 @@
 
       if (t.hasAttribute("data-go")) {
         const view = t.getAttribute("data-go");
+        if (view === "fiche") {
+          location.assign("formules.html");
+          return;
+        }
         if (state.classNotice === "reset-ask" || state.classNotice === "wipe-ask") state.classNotice = "";
         if (state.view === view) {
           render();

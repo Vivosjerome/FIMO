@@ -194,11 +194,11 @@
               <strong>Révisions</strong>
               <span>Fiches par thème</span>
             </button>
-            <button class="mode mode-fiche" data-go="fiche">
-              <span class="mode-kicker">À retenir</span>
+            <a class="mode mode-fiche" href="formules.html">
+              <span class="mode-kicker">A retenir</span>
               <strong>Fiche formules</strong>
               <span>PMA · essieux · 44 t</span>
-            </button>
+            </a>
             <button class="mode" data-go="themes">
               <span class="mode-kicker">S'entraîner</span>
               <strong>QCM</strong>
