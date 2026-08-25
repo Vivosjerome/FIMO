@@ -443,11 +443,12 @@
         type: "cours",
         title: "Cours",
         blocks: [
-          { p: "Tu t'arrêtes, warnings, gilet si tu sors, documents. Tu n'effaces rien, tu ne « testes » pas une carte. Les forces de l'ordre / DREAL contrôlent temps, masses, technique, marchandise." }
+          { p: "Tu t'arrêtes, warnings, gilet si tu sors, documents. Tu n'effaces rien, tu ne « testes » pas une carte. Les forces de l'ordre / DREAL contrôlent temps, masses, technique, marchandise." },
+          { p: "Pour les temps : tu dois pouvoir justifier la journée en cours et les 56 jours précédents (carte, tickets, disques si analogique). 28 jours, c'est le rythme de téléchargement de la carte par l'entreprise, pas la durée du contrôle." }
         ]
       },
-      { type: "connaitre", title: "À connaître parfaitement", ul: ["Coopérer", "Rien cacher sur le chrono"] },
-      { type: "pieges", title: "Pièges", ul: ["Jeter un disque / une carte"] },
+      { type: "connaitre", title: "À connaître parfaitement", ul: ["Coopérer", "Rien cacher sur le chrono", "Jour en cours + 56 jours"] },
+      { type: "pieges", title: "Pièges", ul: ["Jeter un disque / une carte", "Réciter 28 jours pour le contrôle"] },
       { type: "exemple", title: "Exemple conducteur", body: "File de contrôle : tu as déjà le classeur en main, tu restes dans la cabine tant qu'on ne te dit pas de descendre." },
       { type: "resume", title: "Résumé", body: "Calme, papiers, vérité du chrono." }
     ]

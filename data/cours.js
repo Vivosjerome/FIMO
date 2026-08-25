@@ -236,11 +236,12 @@
           { p: "Le chronotachygraphe enregistre notamment la conduite, la vitesse, les temps. Le numérique utilise une carte conducteur. Conduire sans carte (sauf exception très encadrée) ou avec la carte d'un autre est une infraction grave." },
           { h: "Modes courants", ul: ["Conduite (souvent automatique dès que le véhicule roule)", "Autre travail", "Disponibilité", "Repos / pause"] },
           { p: "Les activités hors véhicule (quai, attente) doivent être saisies correctement, y compris en saisie manuelle si besoin, pour que le décompte 561/2006 et le temps de travail soient justes." },
-          { p: "En contrôle : carte, sorties papier / données, et cohérence des pictogrammes. Un oubli de carte se voit." }
+          { p: "En contrôle : carte, sorties papier / données, et cohérence des pictogrammes. Un oubli de carte se voit." },
+          { h: "28 jours et 56 jours — ne pas mélanger", ul: ["Contrôle sur route : journée en cours + 56 jours d'activité à justifier (règle actuelle, 165/2014 modifié). Les vieux supports disent encore 28.", "L'entreprise télécharge / archive la carte conducteur au moins tous les 28 jours. Ça n'a pas changé.", "Le boîtier du véhicule (VU) : téléchargement souvent tous les 90 jours."] }
         ]
       },
-      { type: "connaitre", title: "À connaître parfaitement", ul: ["Carte conducteur personnelle", "4 familles d'activité à connaître : conduite, travail, dispo, repos", "Saisie manuelle des temps oubliés", "Ne jamais « prêter » sa carte"] },
-      { type: "pieges", title: "Pièges", ul: ["Carte restée à la maison « juste aujourd'hui »", "Laisser le repos alors qu'on charge", "Deux cartes / aimant : hors sujet et illégal"] },
+      { type: "connaitre", title: "À connaître parfaitement", ul: ["Carte conducteur personnelle", "4 familles d'activité : conduite, travail, dispo, repos", "Contrôle : jour en cours + 56 jours", "Téléchargement carte entreprise : 28 jours", "Saisie manuelle des temps oubliés", "Ne jamais « prêter » sa carte"] },
+      { type: "pieges", title: "Pièges", ul: ["Réciter 28 jours pour le contrôle (c'est l'ancien chiffre)", "Confondre 28 j (copie carte) et 56 j (présentation)", "Carte restée à la maison « juste aujourd'hui »", "Laisser le repos alors qu'on charge"] },
       { type: "exemple", title: "Exemple conducteur", body: "Arrivée au quai : tu passes en autre travail. Pause repas : repos. Reprise route : conduite. Le soir, tu vérifies que la journée affichée correspond à ce que tu as vraiment fait." },
       { type: "resume", title: "Résumé", body: "Le chrono prouve tes temps. Carte à soi, bon pictogramme, pas de bricolage." }
     ]
