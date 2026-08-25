@@ -269,7 +269,7 @@
     const f = F.getFiche(ficheId);
     if (!f) return wrap("", "<p>Fiche introuvable.</p>");
     const qs = F.bank.byFiche(f.id);
-    const order = { connaitre: 0, objectif: 1, cours: 2, pieges: 3, exemple: 4, resume: 5 };
+    const order = { objectif: 0, cours: 1, connaitre: 2, pieges: 3, exemple: 4, resume: 5 };
     const sections = (f.sections || [])
       .slice()
       .sort(function (a, b) {
