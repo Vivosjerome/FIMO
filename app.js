@@ -621,28 +621,34 @@
       render();
       window.scrollTo(0, 0);
     });
-    app.addEventListener("click", (e) => {
-      const rank = e.target.closest("[data-rank-toggle]");
-      if (rank && app.contains(rank) && !e.target.closest("[data-go], [data-reset]")) {
-        const open = rank.classList.contains("is-open");
-        app.querySelectorAll("[data-rank-toggle].is-open").forEach(function (node) {
-          node.classList.remove("is-open");
-        });
-        if (!open) rank.classList.add("is-open");
-        return;
-      }
-      const t = e.target.closest("[data-go], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board]");
-      if (!t || !app.contains(t)) return;
-      if (t.disabled || t.hasAttribute("disabled")) return;
-      e.preventDefault();
+      app.addEventListener("click", (e) => {
+    const rank = e.target.closest("[data-rank-toggle]");
+    if (rank && app.contains(rank) && !e.target.closest("[data-go], [data-reset]")) {
+      const open = rank.classList.contains("is-open");
+      app.querySelectorAll("[data-rank-toggle].is-open").forEach(function (node) {
+        node.classList.remove("is-open");
+      });
+      if (!open) rank.classList.add("is-open");
+      return;
+    }
 
-      if (t.hasAttribute("data-go")) {
-        const view = t.getAttribute("data-go");
-        if (state.classNotice === "reset-ask" || state.classNotice === "wipe-ask") state.classNotice = "";
-        if (state.view === view) {
-          render();
-          return;
-        }
+    const t = e.target.closest("[data-go], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board], [data-admin-wipe]");
+    if (!t || !app.contains(t)) return;
+    if (t.disabled || t.hasAttribute("disabled")) return;
+    e.preventDefault();
+
+    if (t.hasAttribute("data-admin-wipe")) {
+      const code = prompt("Code administrateur requis :");
+      if (code === "1234") { // <-- Remplace 1234 par ton mot de passe
+        state.classNotice = "wipe-ask";
+        state.view = "classement";
+        render();
+        window.scrollTo(0, 0);
+      } else if (code !== null) {
+        alert("Code incorrect.");
+      }
+      return;
+    }
         goTo(view);
         render();
         window.scrollTo(0, 0);
