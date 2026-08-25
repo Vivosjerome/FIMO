@@ -3,7 +3,7 @@
   const F = window.FIMO;
 
   if (typeof CATEGORIES === "undefined" || typeof QUESTIONS === "undefined" || !F || !F.ui) {
-    app.innerHTML = '<p class="boot">Erreur : les questions n\'ont pas charg├®. Recharge la page.</p>';
+    app.innerHTML = '<p class="boot">Erreur : les questions n\'ont pas chargé. Recharge la page.</p>';
     return;
   }
 
@@ -193,25 +193,25 @@
           <h2>Exercices PMA &amp; charge utile</h2>
           <p>
             Que du calcul : le dessin, les plaques de tare, et tu tapes le PMA et la CU.
-            Pas de QCM. Les chiffres changent ├á chaque s├®rie.
+            Pas de QCM. Les chiffres changent à chaque série.
           </p>
           <p class="foot-link">
             <button class="ghost" data-go="fiche">Fiche formules</button>
           </p>
           <div class="modes modes-3">
             <button class="mode mode-main" data-start-pma="8">
-              <span class="mode-kicker">S├®rie</span>
-              <strong>8 v├®hicules</strong>
+              <span class="mode-kicker">Série</span>
+              <strong>8 véhicules</strong>
               <span>Rapide</span>
             </button>
             <button class="mode" data-start-pma="12">
-              <span class="mode-kicker">S├®rie</span>
-              <strong>12 v├®hicules</strong>
+              <span class="mode-kicker">Série</span>
+              <strong>12 véhicules</strong>
               <span>Standard</span>
             </button>
             <button class="mode" data-start-pma="16">
-              <span class="mode-kicker">S├®rie</span>
-              <strong>16 v├®hicules</strong>
+              <span class="mode-kicker">Série</span>
+              <strong>16 véhicules</strong>
               <span>Complet</span>
             </button>
           </div>
@@ -225,26 +225,26 @@
       <div class="page">
         <header class="chrome">${topbar()}</header>
         <main class="wrap">
-        <div class="section-title">├Ç coller dans la t├¬te</div>
+        <div class="section-title">À coller dans la tête</div>
         <div class="fiche">
           <article>
-            <h3>V├®hicule isol├®</h3>
+            <h3>Véhicule isolé</h3>
             <p class="line"><span class="sigle">MMA</span> = <strong><span class="sigle">PTAC</span></strong></p>
-            <p class="line"><span class="sigle">CU</span> = <strong><span class="sigle">MMA</span> ÔêÆ <span class="sigle">PV</span></strong></p>
-            <p class="line"><span class="sigle">PTRA</span> = <strong>ignor├® sans attelage</strong></p>
+            <p class="line"><span class="sigle">CU</span> = <strong><span class="sigle">MMA</span> − <span class="sigle">PV</span></strong></p>
+            <p class="line"><span class="sigle">PTRA</span> = <strong>ignoré sans attelage</strong></p>
           </article>
 
           <article>
-            <h3>Ensemble ÔÇö le plus petit des 3</h3>
+            <h3>Ensemble — le plus petit des 3</h3>
             <p class="line">1. <span class="sigle">PTRA</span> moteur = <strong>plaque de tare</strong></p>
             <p class="line">2. Loi des essieux = <strong>38 t / 40 t / 44 t</strong></p>
             <p class="line">3. Porteur + remorque = <strong><span class="sigle">PTAC</span> + <span class="sigle">PTAC</span></strong></p>
             <p class="line">3. Tracteur + semi = <strong><span class="sigle">PV</span> tracteur + <span class="sigle">PTAC</span> semi</strong></p>
-            <p class="line"><span class="sigle">CU</span> = <strong><span class="sigle">MMA</span> ÔêÆ somme des <span class="sigle">PV</span></strong></p>
+            <p class="line"><span class="sigle">CU</span> = <strong><span class="sigle">MMA</span> − somme des <span class="sigle">PV</span></strong></p>
           </article>
 
           <article>
-            <h3>Essieux ÔÇö isol├®</h3>
+            <h3>Essieux — isolé</h3>
             <p class="kv-label">Moteur</p>
             <p class="line">2 essieux = <strong>19 t</strong></p>
             <p class="line">3 essieux = <strong>26 t</strong></p>
@@ -255,7 +255,7 @@
           </article>
 
           <article>
-            <h3>Essieux ÔÇö ensemble</h3>
+            <h3>Essieux — ensemble</h3>
             <p class="line">4 essieux = <strong>38 t</strong></p>
             <p class="line">5 essieux et + = <strong>40 t</strong></p>
             <p class="line">5 essieux et + avec conditions = <strong>44 t</strong></p>
@@ -263,17 +263,17 @@
 
           <article>
             <h3>44 t</h3>
-            <p class="line">Essieux = <strong>ÔëÑ 5</strong></p>
+            <p class="line">Essieux = <strong>≥ 5</strong></p>
             <p class="line"><span class="sigle">PTRA</span> moteur = <strong>44 t</strong></p>
-            <p class="line">Semi 2 essieux = <strong><span class="sigle">PTAC</span> ÔëÑ 37 t</strong></p>
-            <p class="line">Semi 3 essieux = <strong><span class="sigle">PTAC</span> ÔëÑ 38 t</strong></p>
-            <p class="line">Porteur + remorque = <strong>chaque unit├® au max essieux</strong></p>
+            <p class="line">Semi 2 essieux = <strong><span class="sigle">PTAC</span> ≥ 37 t</strong></p>
+            <p class="line">Semi 3 essieux = <strong><span class="sigle">PTAC</span> ≥ 38 t</strong></p>
+            <p class="line">Porteur + remorque = <strong>chaque unité au max essieux</strong></p>
           </article>
 
           <article>
             <h3>Dimensions</h3>
             <p class="line">Porteur = <strong>12 m</strong></p>
-            <p class="line">Articul├® = <strong>16,50 m</strong></p>
+            <p class="line">Articulé = <strong>16,50 m</strong></p>
             <p class="line">Train routier = <strong>18,75 m</strong></p>
             <p class="line">Largeur = <strong>2,55 m</strong></p>
             <p class="line">Largeur frigo = <strong>2,60 m</strong></p>
@@ -282,15 +282,15 @@
           <article>
             <h3>Ralentisseurs</h3>
             <p class="line">1. Frein moteur = <strong>compression</strong></p>
-            <p class="line">2. ├ëchappement = <strong>contre-pression</strong></p>
+            <p class="line">2. Échappement = <strong>contre-pression</strong></p>
             <p class="line">3. Hydrodynamique = <strong>huile / eau</strong></p>
-            <p class="line">4. ├ëlectromagn├®tique = <strong>Telma</strong></p>
+            <p class="line">4. Électromagnétique = <strong>Telma</strong></p>
           </article>
 
           <article>
             <h3>Freins</h3>
-            <p class="line">Service = <strong>lÔÇÖair serre</strong></p>
-            <p class="line">Park = <strong>lÔÇÖair desserre</strong></p>
+            <p class="line">Service = <strong>l’air serre</strong></p>
+            <p class="line">Park = <strong>l’air desserre</strong></p>
           </article>
         </div>
         </main>
@@ -358,21 +358,21 @@
         const g = state.picked;
         const both = g.pmaOk && g.cuOk;
         explain = `<div class="explain ${both ? "ok" : "bad"}">
-          <strong>${both ? "Juste." : "├Ç revoir."}</strong>
+          <strong>${both ? "Juste." : "À revoir."}</strong>
           <div class="pma-verdict">
-            <p><span class="sigle">PMA</span> ${g.pmaOk ? "bon" : "faux ÔåÆ " + fmtT(q.mma) + " t"}</p>
-            <p><span class="sigle">CU</span> ${g.cuOk ? "bon" : "faux ÔåÆ " + fmtT(q.cu) + " t"}</p>
+            <p><span class="sigle">PMA</span> ${g.pmaOk ? "bon" : "faux → " + fmtT(q.mma) + " t"}</p>
+            <p><span class="sigle">CU</span> ${g.cuOk ? "bon" : "faux → " + fmtT(q.cu) + " t"}</p>
           </div>
           ${steps ? `<ol class="steps">${steps}</ol>` : ""}
         </div>`;
       } else {
         const good = state.picked === q.correct;
         const letter = "ABCD".charAt(q.correct);
-        const trap = q.trap ? `<p class="tip-trap">Pi├¿ge fr├®quent : ${markText(q.trap)}</p>` : "";
-        const remember = q.remember ? `<p class="tip-hold">├Ç retenir : ${markText(q.remember)}</p>` : "";
+        const trap = q.trap ? `<p class="tip-trap">Piège fréquent : ${markText(q.trap)}</p>` : "";
+        const remember = q.remember ? `<p class="tip-hold">À retenir : ${markText(q.remember)}</p>` : "";
         explain = `<div class="explain ${good ? "ok" : "bad"}">
-          <strong>${good ? "Bonne r├®ponse" : "Mauvaise r├®ponse"}</strong>
-          <p>Bonne r├®ponse : ${letter} ÔÇö ${markText(q.options[q.correct])}</p>
+          <strong>${good ? "Bonne réponse" : "Mauvaise réponse"}</strong>
+          <p>Bonne réponse : ${letter} — ${markText(q.options[q.correct])}</p>
           <p style="margin-top:8px">${markText(q.expl || "")}</p>
           ${remember}${trap}
           ${steps ? `<ul class="steps">${steps}</ul>` : ""}
@@ -385,7 +385,7 @@
     if (isPma && !locked) footerRight = `<button class="btn btn-primary" data-valid-pma="1">Valider</button>`;
     else if (locked) footerRight = `<button class="btn btn-primary" data-next="1">${nextLabel}</button>`;
     else if (state.mode === "exam" && isPma) footerRight = `<button class="btn btn-primary" data-valid-pma="1">Valider</button>`;
-    else if (state.mode === "exam") footerRight = `<span class="exam-note">Corrig├® ├á la fin</span>`;
+    else if (state.mode === "exam") footerRight = `<span class="exam-note">Corrigé à la fin</span>`;
     const footer = `<div class="action-bar"><div class="action-bar-inner">
       <button class="ghost" data-back="1">Retour</button>
       ${footerRight}
@@ -408,7 +408,7 @@
             ${situation}
             <h3>${markText(q.q)}</h3>
             ${answers}
-            <p class="hint${isPma ? " pma-hint" : ""}">${isPma ? "Lis les plaques, calcule, puis valide." : state.mode === "exam" ? "Une r├®ponse et on passe. Corrig├® ├á la fin." : "Touches 1 ├á 4, Entr├®e pour continuer."}</p>
+            <p class="hint${isPma ? " pma-hint" : ""}">${isPma ? "Lis les plaques, calcule, puis valide." : state.mode === "exam" ? "Une réponse et on passe. Corrigé à la fin." : "Touches 1 à 4, Entrée pour continuer."}</p>
             ${explain}
           </div>
         </main>
@@ -430,14 +430,14 @@
     const review = state.history
       .map((h, i) => {
         if (h.good) {
-          return `<article><b>Q${i + 1} ÔÇö <span class="right">Bon</span></b><div class="muted">${markText(h.q || "PMA / CU")}</div></article>`;
+          return `<article><b>Q${i + 1} — <span class="right">Bon</span></b><div class="muted">${markText(h.q || "PMA / CU")}</div></article>`;
         }
         const steps = (h.steps || []).map((s) => `<li>${markText(s)}</li>`).join("");
         return `<article>
-          <b>Q${i + 1} ÔÇö <span class="wrong">Faux</span></b>
+          <b>Q${i + 1} — <span class="wrong">Faux</span></b>
           <div>${markText(h.q || "PMA / CU")}</div>
-          <div class="muted">Tu as r├®pondu : ${markText(h.given)}</div>
-          <div class="muted">Bonne r├®ponse : ${markText(h.right)}</div>
+          <div class="muted">Tu as répondu : ${markText(h.given)}</div>
+          <div class="muted">Bonne réponse : ${markText(h.right)}</div>
           <p style="margin-top:8px">${markText(h.expl || "")}</p>
           ${steps ? `<ul class="steps">${steps}</ul>` : ""}
         </article>`;
@@ -450,7 +450,7 @@
         <main class="wrap">
         <div class="result">
           <div class="score-ring" style="--p:${p}"><span>${got}/${max}</span></div>
-          <h2>${p}% de bonnes r├®ponses</h2>
+          <h2>${p}% de bonnes réponses</h2>
           <p style="margin:8px 0 0">${escapeHtml(state.title)}</p>
           ${examNote}
           <div class="result-actions">
@@ -459,7 +459,7 @@
             <button class="btn btn-dark" data-go="errors">Mes erreurs</button>
           </div>
         </div>
-        <div class="section-title">Corrig├®</div>
+        <div class="section-title">Corrigé</div>
         <div class="review">${review}</div>
         </main>
       </div>`;
@@ -581,8 +581,8 @@
       good: both,
       got: (pmaOk ? 1 : 0) + (cuOk ? 1 : 0),
       max: 2,
-      given: "PMA " + (pma || "ÔÇö") + " ┬À CU " + (cu || "ÔÇö"),
-      right: "PMA " + fmtT(q.mma) + " t ┬À CU " + fmtT(q.cu) + " t",
+      given: "PMA " + (pma || "—") + " · CU " + (cu || "—"),
+      right: "PMA " + fmtT(q.mma) + " t · CU " + fmtT(q.cu) + " t",
       expl: q.expl,
       steps: q.steps
     });
@@ -645,7 +645,7 @@
         render();
         const err = document.createElement("p");
         err.className = "note warn";
-        err.textContent = res.err || "Pr├®nom obligatoire.";
+        err.textContent = res.err || "Prénom obligatoire.";
         const wrap = app.querySelector(".gate-form");
         if (wrap) wrap.appendChild(err);
         return;
@@ -708,7 +708,7 @@
         if (kind === "yes") {
           if (F.sync && F.sync.clearAll) {
             F.sync.clearAll().then(function () {
-              state.classNotice = "Classement vid├®. Tu es tout seul dessus.";
+              state.classNotice = "Classement vidé. Tu es tout seul dessus.";
               state.view = "classement";
               render();
             });
@@ -728,7 +728,7 @@
         if (kind === "yes") {
           F.profiles.resetProgress();
           goHome();
-          state.classNotice = "Progression effac├®e. Ton pr├®nom est toujours l├á.";
+          state.classNotice = "Progression effacée. Ton prénom est toujours là.";
           render();
           window.scrollTo(0, 0);
           return;
@@ -768,7 +768,7 @@
       }
       if (t.hasAttribute("data-start-mix")) {
         const n = Number(t.getAttribute("data-start-mix"));
-        startQuiz(mixed(n, true), "Test al├®atoire " + n + " questions", "learn");
+        startQuiz(mixed(n, true), "Test aléatoire " + n + " questions", "learn");
         return;
       }
       if (t.hasAttribute("data-start-exam")) {
@@ -793,14 +793,14 @@
         const id = t.getAttribute("data-start-errors") || "";
         const list = F.select.errors(id);
         if (!list.length) return;
-        startQuiz(list, id ? "Erreurs ÔÇö " + ((F.getFiche(id) || {}).title || id) : "Mes erreurs", "learn");
+        startQuiz(list, id ? "Erreurs — " + ((F.getFiche(id) || {}).title || id) : "Mes erreurs", "learn");
         return;
       }
       if (t.hasAttribute("data-start-quick")) {
         const n = Number(t.getAttribute("data-start-quick"));
         const pool = t.getAttribute("data-pool") || "random";
-        const labels = { random: "R├®vision rapide", unseen: "Jamais vues", errors: "Questions rat├®es", weak: "Points faibles" };
-        startQuiz(F.select.mixed(n, { pool: pool }), (labels[pool] || "R├®vision") + " ┬À " + n, "learn");
+        const labels = { random: "Révision rapide", unseen: "Jamais vues", errors: "Questions ratées", weak: "Points faibles" };
+        startQuiz(F.select.mixed(n, { pool: pool }), (labels[pool] || "Révision") + " · " + n, "learn");
         return;
       }
       if (t.hasAttribute("data-theme")) {
@@ -827,7 +827,7 @@
         else {
           const n = /\d+/.exec(state.title);
           const count = n ? Number(n[0]) : 20;
-          startQuiz(mixed(count, true), "Test al├®atoire " + count + " questions", "learn");
+          startQuiz(mixed(count, true), "Test aléatoire " + count + " questions", "learn");
         }
       }
     });
@@ -851,7 +851,7 @@
 
   try {
     if (typeof CATEGORIES === "undefined" || typeof QUESTIONS === "undefined") {
-      throw new Error("Les questions n'ont pas charg├®.");
+      throw new Error("Les questions n'ont pas chargé.");
     }
     bind();
     if (F.sync && F.sync.on) F.sync.on(paintBoard);
