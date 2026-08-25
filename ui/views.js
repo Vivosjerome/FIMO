@@ -278,7 +278,7 @@
         return ia - ib;
       })
       .map(function (s) {
-        const title = s.type === "connaitre" ? "À savoir par cœur" : s.title || "";
+        const title = s.type === "connaitre" ? "À connaître parfaitement" : s.title || "";
         const extra = s.body ? `<p>${u().markText(s.body)}</p>` : "";
         const lists = (s.ul ? `<ul>${s.ul.map(function (i) { return `<li>${u().markText(i)}</li>`; }).join("")}</ul>` : "") +
           (s.ol ? `<ol>${s.ol.map(function (i) { return `<li>${u().markText(i)}</li>`; }).join("")}</ol>` : "");
