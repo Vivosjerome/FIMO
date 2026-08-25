@@ -1169,6 +1169,23 @@ button.card:disabled {
   font-size: 0.8rem;
 }
 
+.rank-seen {
+  display: block;
+  margin-top: 2px;
+}
+
+.rank-seen.is-on { color: var(--green); }
+
+.rank-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  vertical-align: middle;
+}
+
 .rank-score { text-align: right; font-variant-numeric: tabular-nums; }
 
 .rank-row {

@@ -262,9 +262,13 @@
       .catch(function () {});
   }
 
+  let beat = 0;
+
   function tick() {
     if (document.hidden) return;
     pull();
+    beat += 1;
+    if (beat % 3 === 0) publish();
   }
 
   function start() {

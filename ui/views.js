@@ -23,7 +23,7 @@
             return x.id + ":" + (v == null || v < 0 ? "x" : v);
           })
           .join(",");
-        return [r.id, r.name, r.rate, r.ok, r.attempts, d].join("|");
+        return [r.id, r.name, r.rate, r.ok, r.attempts, d, r.t || 0, r.me ? 1 : 0].join("|");
       })
       .join(";");
   }
@@ -43,6 +43,41 @@
     );
   }
 
+  function seenLabel(row) {
+    if (row.me) return { on: true, text: "en ligne" };
+    const t = Number(row.t) || 0;
+    if (!t) return { on: false, text: "pas encore vu" };
+    const age = Date.now() - t;
+    if (age < 50000) return { on: true, text: "en ligne" };
+    if (age < 90000) return { on: false, text: "à l'instant" };
+    if (age < 3600000) {
+      const m = Math.max(1, Math.round(age / 60000));
+      return { on: false, text: "il y a " + m + " min" };
+    }
+    const d = new Date(t);
+    const now = new Date();
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mm = String(d.getMinutes()).padStart(2, "0");
+    const sameDay =
+      d.getFullYear() === now.getFullYear() &&
+      d.getMonth() === now.getMonth() &&
+      d.getDate() === now.getDate();
+    if (sameDay) return { on: false, text: "aujourd'hui " + hh + ":" + mm };
+    const yest = new Date(now);
+    yest.setDate(now.getDate() - 1);
+    if (
+      d.getFullYear() === yest.getFullYear() &&
+      d.getMonth() === yest.getMonth() &&
+      d.getDate() === yest.getDate()
+    ) {
+      return { on: false, text: "hier " + hh + ":" + mm };
+    }
+    return {
+      on: false,
+      text: String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0")
+    };
+  }
+
   function rankItems(rows) {
     if (!rows || !rows.length) {
       return `<p class="muted">Personne encore. Dès qu'un copain se connecte, il apparaît ici.</p>`;
@@ -51,6 +86,7 @@
       `<ol class="rank-list">` +
       rows
         .map(function (r, i) {
+          const seen = seenLabel(r);
           const detail = r.attempts
             ? r.ok + " bonnes · " + r.attempts + " tentatives"
             : "pas encore de réponse";
@@ -58,6 +94,7 @@
             <span class="rank-n">${i + 1}</span>
             <span class="rank-who">
               <strong>${u().escapeHtml(r.name)}${r.me ? " · toi" : ""}</strong>
+              <small class="rank-seen${seen.on ? " is-on" : ""}">${seen.on ? '<span class="rank-dot"></span>' : ""}${u().escapeHtml(seen.text)}</small>
               <small>${u().escapeHtml(detail)}</small>
             </span>
             <span class="rank-score">
@@ -80,7 +117,7 @@
         <span class="board-live" data-wipe-secret="1">en direct</span>
       </div>
       ${rankItems(rows)}
-      <p class="muted board-hint">% global. Survole un nom pour le détail à côté.</p>
+      <p class="muted board-hint">Point vert = connecté. Survole un nom pour le détail.</p>
     </aside>`;
   }
 
