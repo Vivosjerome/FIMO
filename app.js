@@ -1124,7 +1124,7 @@
       }
     }); 
   }
-
+      }
   window.addEventListener("keydown", (e) => {
     if (state.view !== "quiz") return;
     const q = state.quiz[state.i];
