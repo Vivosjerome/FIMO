@@ -17,6 +17,13 @@
     });
   }
 
+  function markCoeur(s) {
+    return markText(s).replace(
+      /(\d+(?:,\d+)?(?:\s*(?:h|min|t|m|km|g\/l|j|jours?|semaines?|fois|ess\.?))?)/gi,
+      "<strong>$1</strong>"
+    );
+  }
+
   function catLine(c) {
     const mean = c.meaning || "";
     const acronym = /^[A-Z]{2,6}$/.test(c.name);
@@ -57,6 +64,7 @@
   F.ui = {
     escapeHtml: escapeHtml,
     markText: markText,
+    markCoeur: markCoeur,
     catLine: catLine,
     topbar: topbar,
     backBtn: backBtn,

@@ -1039,31 +1039,28 @@ button.card:disabled {
 }
 .cours-block li { margin: 6px 0; }
 .cours-block.cours-connaitre {
-  background: var(--red-soft);
-  border-color: var(--red);
-  box-shadow: inset 4px 0 0 var(--red);
+  background: var(--surface);
+  border: 2px solid var(--red);
+  box-shadow: none;
 }
 .fiche article.cours-connaitre h3 {
   color: var(--red);
   font-size: 0.82rem;
 }
 .cours-block.cours-connaitre ul {
-  margin: 0;
+  margin: 0 0 0 1.1em;
   padding: 0;
-  list-style: none;
+  list-style: disc;
 }
 .cours-block.cours-connaitre li {
-  font-weight: 700;
-  color: var(--red);
+  font-weight: 400;
+  color: var(--ink);
   margin: 8px 0;
-  padding-left: 14px;
-  position: relative;
+  padding-left: 0;
 }
-.cours-block.cours-connaitre li::before {
-  content: "▸";
-  position: absolute;
-  left: 0;
-  color: var(--red);
+.cours-block.cours-connaitre li strong {
+  font-weight: 700;
+  color: var(--ink);
 }
 .cours-block.cours-connaitre .sigle { color: var(--red); }
 .cours-block.cours-pieges { border-color: var(--navy); }

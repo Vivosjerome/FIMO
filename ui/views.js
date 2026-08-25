@@ -294,10 +294,11 @@
     }
     const sections = ordered
       .map(function (s) {
-        const title = s.type === "connaitre" ? "À connaître parfaitement" : s.title || "";
+        const title = s.type === "connaitre" ? "À savoir par cœur" : s.title || "";
         const extra = s.body ? `<p>${u().markText(s.body)}</p>` : "";
-        const lists = (s.ul ? `<ul>${s.ul.map(function (i) { return `<li>${u().markText(i)}</li>`; }).join("")}</ul>` : "") +
-          (s.ol ? `<ol>${s.ol.map(function (i) { return `<li>${u().markText(i)}</li>`; }).join("")}</ol>` : "");
+        const mark = s.type === "connaitre" && u().markCoeur ? u().markCoeur : u().markText;
+        const lists = (s.ul ? `<ul>${s.ul.map(function (i) { return `<li>${mark(i)}</li>`; }).join("")}</ul>` : "") +
+          (s.ol ? `<ol>${s.ol.map(function (i) { return `<li>${mark(i)}</li>`; }).join("")}</ol>` : "");
         return `<article class="cours-block cours-${u().escapeHtml(s.type || "")}">
           <h3>${u().escapeHtml(title)}</h3>
           ${extra}${lists}${renderBlocks(s.blocks)}
