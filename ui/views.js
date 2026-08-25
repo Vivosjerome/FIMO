@@ -77,7 +77,7 @@
     return `<aside class="board" id="live-board">
       <div class="board-head">
         <strong>Classement</strong>
-        <span class="board-live">en direct</span>
+        <span class="board-live" data-wipe-secret="1">en direct</span>
       </div>
       ${rankItems(rows)}
       <p class="muted board-hint">% global. Survole un nom pour le détail à côté.</p>
@@ -427,14 +427,14 @@
       </div>`;
   }
 
-    function classement(notice) {
+  function classement(notice) {
     const me = F.profiles.current();
     const resetAsk = notice === "reset-ask";
     const wipeAsk = notice === "wipe-ask";
     return wrap(
       "",
       `
-      ${notice && !resetAsk && !wipeAsk ? `<p class="note">${u().escapeHtml(notice)}</p>` : ""}
+      ${notice && !resetAsk && !wipeAsk && notice !== "wipe-code" ? `<p class="note">${u().escapeHtml(notice)}</p>` : ""}
       ${boardPanel()}
       <div class="section-title">Comptes sur ce téléphone</div>
       <div class="modes">
@@ -451,6 +451,10 @@
               <button class="btn btn-primary" data-wipe-board="yes">Oui, tout effacer</button>
               <button class="btn btn-dark" data-go="classement">Annuler</button>
             </div>`
+          : notice === "wipe-code"
+          ? `<form class="wipe-pin" data-wipe-code="1">
+              <input id="wipe-pin" type="password" inputmode="numeric" maxlength="8" autocomplete="off" />
+            </form>`
           : resetAsk
           ? `<div class="reset-banner">
               <p><strong>Tout recommencer ?</strong> Tes QCM, erreurs et blancs partent. Ton prénom reste.</p>
@@ -458,7 +462,6 @@
               <button class="btn btn-dark" data-go="classement">Annuler</button>
             </div>`
           : `<p class="foot-link">
-              <button class="ghost danger-ghost" data-admin-wipe="1">Vider le classement (Admin)</button>
               <button class="ghost danger-ghost" data-reset="ask">Tout recommencer</button>
               <button class="ghost danger-ghost" data-reset="forget">Oublier ${u().escapeHtml((me && me.name) || "ce profil")}</button>
             </p>`
@@ -467,7 +470,6 @@
     );
   }
 
-  
   F.views = {
     dashboard: dashboard,
     themes: themes,

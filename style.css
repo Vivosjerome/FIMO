@@ -989,6 +989,22 @@ button.linkish {
   margin-bottom: 8px;
 }
 
+.wipe-pin {
+  margin-top: 18px;
+}
+
+.wipe-pin input {
+  width: 88px;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.2em;
+}
+
 .ghost.is-on {
   border-color: var(--navy);
   color: var(--ink);
