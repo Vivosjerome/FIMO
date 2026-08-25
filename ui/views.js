@@ -269,13 +269,21 @@
     const f = F.getFiche(ficheId);
     if (!f) return wrap("", "<p>Fiche introuvable.</p>");
     const qs = F.bank.byFiche(f.id);
+    const order = { connaitre: 0, objectif: 1, cours: 2, pieges: 3, exemple: 4, resume: 5 };
     const sections = (f.sections || [])
+      .slice()
+      .sort(function (a, b) {
+        const ia = order[a.type] != null ? order[a.type] : 8;
+        const ib = order[b.type] != null ? order[b.type] : 8;
+        return ia - ib;
+      })
       .map(function (s) {
+        const title = s.type === "connaitre" ? "À savoir par cœur" : s.title || "";
         const extra = s.body ? `<p>${u().markText(s.body)}</p>` : "";
         const lists = (s.ul ? `<ul>${s.ul.map(function (i) { return `<li>${u().markText(i)}</li>`; }).join("")}</ul>` : "") +
           (s.ol ? `<ol>${s.ol.map(function (i) { return `<li>${u().markText(i)}</li>`; }).join("")}</ol>` : "");
         return `<article class="cours-block cours-${u().escapeHtml(s.type || "")}">
-          <h3>${u().escapeHtml(s.title || "")}</h3>
+          <h3>${u().escapeHtml(title)}</h3>
           ${extra}${lists}${renderBlocks(s.blocks)}
         </article>`;
       })
