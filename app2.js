@@ -221,79 +221,12 @@
   }
 
   function fiche() {
+    const tpl = document.getElementById("tpl-fiche");
+    const inner = tpl ? tpl.innerHTML : "";
     return `
       <div class="page">
         <header class="chrome">${topbar()}</header>
-        <main class="wrap">
-        <div class="section-title">&Agrave; coller dans la t&ecirc;te</div>
-        <div class="fiche">
-          <article>
-            <h3>V&eacute;hicule isol&eacute;</h3>
-            <p class="line"><span class="sigle">MMA</span> = <strong><span class="sigle">PTAC</span></strong></p>
-            <p class="line"><span class="sigle">CU</span> = <strong><span class="sigle">MMA</span> - <span class="sigle">PV</span></strong></p>
-            <p class="line"><span class="sigle">PTRA</span> = <strong>ignor&eacute; sans attelage</strong></p>
-          </article>
-
-          <article>
-            <h3>Ensemble : le plus petit des 3</h3>
-            <p class="line">1. <span class="sigle">PTRA</span> moteur = <strong>plaque de tare</strong></p>
-            <p class="line">2. Loi des essieux = <strong>38 t / 40 t / 44 t</strong></p>
-            <p class="line">3. Porteur + remorque = <strong><span class="sigle">PTAC</span> + <span class="sigle">PTAC</span></strong></p>
-            <p class="line">3. Tracteur + semi = <strong><span class="sigle">PV</span> tracteur + <span class="sigle">PTAC</span> semi</strong></p>
-            <p class="line"><span class="sigle">CU</span> = <strong><span class="sigle">MMA</span> - somme des <span class="sigle">PV</span></strong></p>
-          </article>
-
-          <article>
-            <h3>Essieux : isol&eacute;</h3>
-            <p class="kv-label">Moteur</p>
-            <p class="line">2 essieux = <strong>19 t</strong></p>
-            <p class="line">3 essieux = <strong>26 t</strong></p>
-            <p class="line">4 essieux et + = <strong>32 t</strong></p>
-            <p class="kv-label">Remorque / semi</p>
-            <p class="line">2 essieux = <strong>19 t</strong></p>
-            <p class="line">3 essieux et + = <strong>26 t</strong></p>
-          </article>
-
-          <article>
-            <h3>Essieux : ensemble</h3>
-            <p class="line">4 essieux = <strong>38 t</strong></p>
-            <p class="line">5 essieux et + = <strong>40 t</strong></p>
-            <p class="line">5 essieux et + avec conditions = <strong>44 t</strong></p>
-          </article>
-
-          <article>
-            <h3>44 t</h3>
-            <p class="line">Essieux = <strong>&gt;= 5</strong></p>
-            <p class="line"><span class="sigle">PTRA</span> moteur = <strong>44 t</strong></p>
-            <p class="line">Semi 2 essieux = <strong><span class="sigle">PTAC</span> &gt;= 37 t</strong></p>
-            <p class="line">Semi 3 essieux = <strong><span class="sigle">PTAC</span> &gt;= 38 t</strong></p>
-            <p class="line">Porteur + remorque = <strong>chaque unit&eacute; au max essieux</strong></p>
-          </article>
-
-          <article>
-            <h3>Dimensions</h3>
-            <p class="line">Porteur = <strong>12 m</strong></p>
-            <p class="line">Articul&eacute; = <strong>16,50 m</strong></p>
-            <p class="line">Train routier = <strong>18,75 m</strong></p>
-            <p class="line">Largeur = <strong>2,55 m</strong></p>
-            <p class="line">Largeur frigo = <strong>2,60 m</strong></p>
-          </article>
-
-          <article>
-            <h3>Ralentisseurs</h3>
-            <p class="line">1. Frein moteur = <strong>compression</strong></p>
-            <p class="line">2. &Eacute;chappement = <strong>contre-pression</strong></p>
-            <p class="line">3. Hydrodynamique = <strong>huile / eau</strong></p>
-            <p class="line">4. &Eacute;lectromagn&eacute;tique = <strong>Telma</strong></p>
-          </article>
-
-          <article>
-            <h3>Freins</h3>
-            <p class="line">Service = <strong>l'air serre</strong></p>
-            <p class="line">Park = <strong>l'air desserre</strong></p>
-          </article>
-        </div>
-        </main>
+        <main class="wrap">${inner}</main>
       </div>`;
   }
 
