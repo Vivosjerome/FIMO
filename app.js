@@ -666,58 +666,117 @@
         if (kind === "yes") {
           if (F.sync && F.sync.clearAll) {
             F.sync.clearAll().then(function () {
-              state.classNotice = "Classement vidé. Tu es tout seul dessus.";
-              state.view = "classement";
-              render();
-            });
-          }
-          return;
-        }
+  app.addEventListener("click", (e) => {
+    const rank = e.target.closest("[data-rank-toggle]");
+    if (rank && app.contains(rank) && !e.target.closest("[data-go], [data-reset]")) {
+      const open = rank.classList.contains("is-open");
+      app.querySelectorAll("[data-rank-toggle].is-open").forEach(function (node) {
+        node.classList.remove("is-open");
+      });
+      if (!open) rank.classList.add("is-open");
+      return;
+    }
+
+    const t = e.target.closest("[data-go], [data-go-fiche], [data-start-mix], [data-start-exam], [data-start-pma], [data-start-fiche], [data-start-errors], [data-start-quick], [data-error-filter], [data-theme], [data-pick], [data-valid-pma], [data-next], [data-retry], [data-reset], [data-switch-user], [data-wipe-board], [data-admin-wipe]");
+    if (!t || !app.contains(t)) return;
+    if (t.disabled || t.hasAttribute("disabled")) return;
+    e.preventDefault();
+
+    // 1. Bouton Admin : Demande du mot de passe
+    if (t.hasAttribute("data-admin-wipe")) {
+      const code = prompt("Code administrateur requis :");
+      if (code === "1234") { // Mot de passe
+        state.classNotice = "wipe-ask";
+        state.view = "classement";
+        render();
+        window.scrollTo(0, 0);
+      } else if (code !== null) {
+        alert("Code incorrect.");
       }
-      if (t.hasAttribute("data-reset")) {
-        const kind = t.getAttribute("data-reset");
-        if (kind === "ask") {
-          state.classNotice = "reset-ask";
-          if (state.view !== "classement") goHome();
+      return;
+    }
+
+    // 2. Action de vidage après confirmation ("Oui, tout effacer")
+    if (t.hasAttribute("data-wipe-board")) {
+      const kind = t.getAttribute("data-wipe-board");
+      if (kind === "yes") {
+        if (F.sync && F.sync.clearAll) {
+          F.sync.clearAll().then(function () {
+            state.classNotice = "Classement vidé. Tu es tout seul dessus.";
+            state.view = "classement";
+            render();
+          });
+        } else if (F.sync && F.sync.wipe) {
+          F.sync.wipe();
+          state.classNotice = "Classement vidé.";
+          state.view = "classement";
           render();
-          window.scrollTo(0, 0);
-          return;
         }
-        if (kind === "yes") {
-          F.profiles.resetProgress();
-          goHome();
-          state.classNotice = "Progression effacée. Ton prénom est toujours là.";
-          render();
-          window.scrollTo(0, 0);
-          return;
-        }
-        if (kind === "forget") {
-          F.profiles.removeCurrent();
-          state.view = "login";
-          render();
-          window.scrollTo(0, 0);
-          return;
-        }
+        return;
       }
-      if (t.hasAttribute("data-switch-user")) {
-        F.profiles.switchTo(t.getAttribute("data-switch-user"));
+    }
+
+    if (t.hasAttribute("data-go")) {
+      const view = t.getAttribute("data-go");
+      if (state.classNotice === "reset-ask" || state.classNotice === "wipe-ask") state.classNotice = "";
+      if (state.view === view) {
+        render();
+        return;
+      }
+      goTo(view);
+      render();
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (t.hasAttribute("data-reset")) {
+      const kind = t.getAttribute("data-reset");
+      if (kind === "ask") {
+        state.classNotice = "reset-ask";
+        if (state.view !== "classement") goHome();
+        render();
+        window.scrollTo(0, 0);
+        return;
+      }
+      if (kind === "yes") {
+        F.profiles.resetProgress();
         goHome();
-        if (F.sync && F.sync.start) F.sync.start();
+        state.classNotice = "Progression effacée. Ton prénom est toujours là.";
         render();
         window.scrollTo(0, 0);
         return;
       }
-      if (t.hasAttribute("data-go-fiche")) {
-        const id = t.getAttribute("data-go-fiche");
-        if (!id) return;
-        if (state.view !== "fiche-view" || state.ficheId !== id) pushNav();
-        state.ficheId = id;
-        state.view = "fiche-view";
-        F.progress.openFiche(id);
+      if (kind === "forget") {
+        F.profiles.removeCurrent();
+        state.view = "login";
         render();
         window.scrollTo(0, 0);
         return;
       }
+    }
+
+    if (t.hasAttribute("data-switch-user")) {
+      F.profiles.switchTo(t.getAttribute("data-switch-user"));
+      goHome();
+      if (F.sync && F.sync.start) F.sync.start();
+      render();
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (t.hasAttribute("data-go-fiche")) {
+      const id = t.getAttribute("data-go-fiche");
+      if (!id) return;
+      if (state.view !== "fiche-view" || state.ficheId !== id) pushNav();
+      state.ficheId = id;
+      state.view = "fiche-view";
+      F.progress.openFiche(id);
+      render();
+      window.scrollTo(0, 0);
+      return;
+    }
+  });
+
       if (t.hasAttribute("data-error-filter")) {
         state.errorFilter = t.getAttribute("data-error-filter") || "";
         state.view = "errors";
