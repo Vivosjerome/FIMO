@@ -1205,8 +1205,11 @@ button.card:disabled {
   color: var(--muted);
   font-size: 0.68rem;
 }
-.rank-who small:not(.rank-seen),
-.rank-score small { display: none; }
+.rank-count {
+  display: block;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
 
 .rank-seen {
   display: block;

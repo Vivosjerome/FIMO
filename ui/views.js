@@ -87,19 +87,16 @@
       rows
         .map(function (r, i) {
           const seen = seenLabel(r);
-          const detail = r.attempts
-            ? r.ok + " bonnes · " + r.attempts + " tentatives"
-            : "pas encore de réponse";
+          const count = r.attempts ? r.ok + " / " + r.attempts : "0 / 0";
           return `<li class="rank-row${r.me ? " is-me" : ""}" data-rank-toggle="${u().escapeHtml(r.id)}">
             <span class="rank-n">${i + 1}</span>
             <span class="rank-who">
               <strong>${u().escapeHtml(r.name)}${r.me ? " · toi" : ""}</strong>
               <small class="rank-seen${seen.on ? " is-on" : ""}">${seen.on ? '<span class="rank-dot"></span>' : ""}${u().escapeHtml(seen.text)}</small>
-              <small>${u().escapeHtml(detail)}</small>
             </span>
             <span class="rank-score">
               <b>${r.rate} %</b>
-              <small>global</small>
+              <small class="rank-count">${u().escapeHtml(count)}</small>
             </span>
             ${domainTip(r)}
           </li>`;
