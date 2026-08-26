@@ -1156,64 +1156,91 @@ button.card:disabled {
 .rank-list {
   list-style: none;
   display: grid;
-  gap: 8px;
-  margin: 0 0 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0 0 16px;
 }
 
 .rank-row {
   display: grid;
-  grid-template-columns: 36px 1fr auto;
-  gap: 10px;
-  align-items: center;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "n score"
+    "who who";
+  gap: 1px 6px;
+  align-items: baseline;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 12px 14px;
+  border-radius: 8px;
+  padding: 7px 8px 6px;
+  cursor: pointer;
+  position: relative;
+  min-width: 0;
 }
 
 .rank-row.is-me { border-color: var(--navy); }
 
 .rank-n {
+  grid-area: n;
   font-weight: 800;
+  font-size: 0.68rem;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 
+.rank-who {
+  grid-area: who;
+  min-width: 0;
+}
+
 .rank-who strong, .rank-score b { display: block; }
+.rank-who strong {
+  font-size: 0.78rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .rank-who small, .rank-score small {
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.68rem;
 }
+.rank-who small:not(.rank-seen),
+.rank-score small { display: none; }
 
 .rank-seen {
   display: block;
-  margin-top: 2px;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .rank-seen.is-on { color: var(--green); }
 
 .rank-dot {
   display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-right: 5px;
+  width: 6px;
+  height: 6px;
+  margin-right: 4px;
   border-radius: 50%;
   background: var(--green);
   vertical-align: middle;
 }
 
-.rank-score { text-align: right; font-variant-numeric: tabular-nums; }
-
-.rank-row {
-  cursor: pointer;
+.rank-score {
+  grid-area: score;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
+.rank-score b { font-size: 0.82rem; }
 
 .rank-tip {
   display: none;
   position: absolute;
-  top: 44px;
-  right: calc(100% + 12px);
-  width: 240px;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 200px;
   z-index: 50;
   background: #12141a;
   border: 1px solid var(--line);
@@ -1243,13 +1270,9 @@ button.card:disabled {
 
 .rank-row.is-open .rank-tip { display: block; }
 
-@media (max-width: 959px) {
-  .rank-tip {
-    position: static;
-    width: auto;
-    margin-top: 8px;
-    pointer-events: auto;
-  }
+.rank-row:nth-child(3n) .rank-tip {
+  left: auto;
+  right: 0;
 }
 
 .dash-layout {
