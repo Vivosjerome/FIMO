@@ -9,9 +9,9 @@
         const rec = answers[id];
         const key = rec.relatedFiche || rec.category || "autre";
         if (!buckets[key]) buckets[key] = { id: key, n: 0, ok: 0, ko: 0 };
-        buckets[key].n += rec.n;
-        buckets[key].ok += rec.ok;
-        buckets[key].ko += rec.ko;
+        buckets[key].n += 1;
+        if (rec.last) buckets[key].ok += 1;
+        else buckets[key].ko += 1;
       });
       return Object.keys(buckets).map(function (k) {
         const b = buckets[k];

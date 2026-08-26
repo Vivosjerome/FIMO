@@ -74,11 +74,10 @@
   }
 
   function rankScore(row) {
-    const att = row.attempts || 0;
+    const n = row.unique || row.attempts || 0;
     const rate = row.rate || 0;
-    const weighted = att >= 10 ? rate : Math.round((rate * att) / 10);
     const blanc = row.blanc == null || row.blanc < 0 ? 0 : row.blanc;
-    return weighted * 100000 + (row.ok || 0) * 100 + blanc;
+    return rate * 100000 + n * 100 + blanc;
   }
 
   function parseUsers(data) {

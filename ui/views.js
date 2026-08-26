@@ -164,7 +164,7 @@
               <span>${sum.unique} / ${sum.total} questions vues · ${sum.coverage} %</span>
             </div>
             ${u().bar(sum.coverage)}
-            <p class="muted">Réussite ${sum.rate} % · Blanc ${blanc} · ${sum.ok} / ${sum.attempts || 0} tentatives</p>
+            <p class="muted">Réussite ${sum.rate} % · Blanc ${blanc} · ${sum.ok} / ${sum.unique || 0} questions</p>
           </div>
           ${
             notice === "reset-ask"

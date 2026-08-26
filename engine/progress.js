@@ -87,12 +87,13 @@
   function statsOfProgress(progress, totalFixed) {
     const answers = (progress && progress.answers) || {};
     const ids = Object.keys(answers);
-    let attempts = 0;
+    let answered = 0;
     let ok = 0;
     ids.forEach(function (id) {
       const rec = answers[id];
-      attempts += rec.n || 0;
-      ok += rec.ok || 0;
+      if (!rec || !(rec.n || rec.last)) return;
+      answered += 1;
+      if (rec.last) ok += 1;
     });
     let blanc = null;
     ((progress && progress.sessions) || []).forEach(function (s) {
@@ -100,12 +101,12 @@
       if (!blanc || s.got > blanc.got) blanc = { got: s.got, max: 60, t: s.t };
     });
     return {
-      unique: ids.length,
+      unique: answered,
       total: totalFixed || 0,
-      attempts: attempts,
+      attempts: answered,
       ok: ok,
-      rate: attempts ? Math.round((ok / attempts) * 100) : 0,
-      coverage: totalFixed ? Math.round((ids.length / totalFixed) * 100) : 0,
+      rate: answered ? Math.round((ok / answered) * 100) : 0,
+      coverage: totalFixed ? Math.round((answered / totalFixed) * 100) : 0,
       blanc: blanc
     };
   }
@@ -139,11 +140,10 @@
   }
 
   function rankScore(row) {
-    const att = row.attempts || 0;
+    const n = row.unique || row.attempts || 0;
     const rate = row.rate || 0;
-    const weighted = att >= 10 ? rate : Math.round((rate * att) / 10);
     const blanc = row.blanc ? row.blanc.got : 0;
-    return weighted * 100000 + (row.ok || 0) * 100 + blanc;
+    return rate * 100000 + n * 100 + blanc;
   }
 
   F.progress = {
