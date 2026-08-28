@@ -332,6 +332,7 @@
         <main class="wrap wrap-quiz">
           <div class="q-card${isPma ? " q-card-pma" : ""}">
             ${kicker}
+            ${isPma ? `<button type="button" class="btn btn-pma-help" data-pma-help="1">Calcul des PMA</button>` : ""}
             ${diagram}
             ${situation}
             <h3>${markText(q.q)}</h3>
@@ -584,6 +585,12 @@
       window.scrollTo(0, 0);
     });
     app.addEventListener("click", (e) => {
+      const pmaHelp = e.target.closest("[data-pma-help]");
+      if (pmaHelp && app.contains(pmaHelp)) {
+        const dlg = document.getElementById("pma-help");
+        if (dlg && dlg.showModal && !dlg.open) dlg.showModal();
+        return;
+      }
       const secret = e.target.closest("[data-wipe-secret]");
       if (secret && app.contains(secret) && state.view === "classement") {
         wipeTaps += 1;
@@ -763,6 +770,13 @@
         }
       }
     });
+    const dlg = document.getElementById("pma-help");
+    if (dlg && !dlg.dataset.bound) {
+      dlg.dataset.bound = "1";
+      dlg.addEventListener("click", function (ev) {
+        if (ev.target === dlg) dlg.close();
+      });
+    }
   }
 
   window.addEventListener("keydown", (e) => {
