@@ -300,7 +300,7 @@
       const axles = pick([2, 3, 4]);
       const ptac = maxPtacMoteur(axles) - pick([0, 0, 0, 1]);
       const pv = round05(Math.min(ptac - 6, ptac * (0.38 + Math.random() * 0.12)));
-      const ptra = pick([38, 40, 44, 44]);
+      const ptra = pick([38, 40, 40, 40]);
       return { id: "r" + i, kind, pneu, porteur: { axles, ptac, pv, ptra } };
     }
     if (kind === "porteur-remorque") {
@@ -312,7 +312,7 @@
         id: "r" + i,
         kind,
         pneu,
-        porteur: { axles: pa, ptac: ptacP, pv: round05(7 + Math.random() * 5), ptra: pick([38, 40, 44, 44, 42]) },
+        porteur: { axles: pa, ptac: ptacP, pv: round05(7 + Math.random() * 5), ptra: pick([38, 40, 40, 44]) },
         remorque: { axles: ra, ptac: ptacR, pv: round05(4.5 + Math.random() * 2.5) }
       };
     }
@@ -327,7 +327,7 @@
         axles: ta,
         ptac: ta === 2 ? pick([18, 19]) : 26,
         pv: round05(6.5 + Math.random() * 2.5),
-        ptra: pick([40, 42, 44, 44, 38])
+        ptra: pick([38, 40, 40, 44])
       },
       semi: { axles: sa, ptac: semiPtac, pv: round05(5.5 + Math.random() * 2.5) }
     };

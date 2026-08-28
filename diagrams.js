@@ -210,22 +210,20 @@
     let title;
     let axles;
     if (exo.kind === "porteur") {
-      title = "Véhicule isolé — porteur";
+      title = "Véhicule isolé - porteur";
       axles = exo.porteur.axles + " essieux";
       return `<div class="exo-meta"><strong>${title}</strong><span>${axles}</span></div>`;
     }
     if (exo.kind === "porteur-remorque") {
-      title = "Ensemble — porteur + remorque";
+      title = "Ensemble - porteur + remorque";
       axles = exo.porteur.axles + exo.remorque.axles + " essieux";
     } else {
-      title = "Articulé — tracteur + semi";
+      title = "Articulé - tracteur + semi";
       axles = exo.tracteur.axles + exo.semi.axles + " essieux";
     }
-    const ok44 = !!exo.eligible44;
     return `<div class="exo-meta">
       <strong>${title}</strong>
       <span>${axles}</span>
-      <span class="exo-44${ok44 ? " ok" : ""}">${ok44 ? "44 t possible" : "44 t non"}</span>
     </div>`;
   };
 
