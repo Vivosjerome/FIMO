@@ -155,7 +155,7 @@
       <div class="dash-layout">
         <section class="hero dash-hero">
           <div class="hero-top">
-            <img class="prof" src="https://vivosjerome.github.io/FIMO/gandalf.gif" alt="Le formateur" />
+            <img class="prof" src="classe.png?v=1" alt="Salle FIMO" />
             <h2>${who ? "Salut " + u().escapeHtml(who) : "Préparation FIMO"}</h2>
           </div>
           <div class="dash-progress">
